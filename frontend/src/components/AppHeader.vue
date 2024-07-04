@@ -111,12 +111,7 @@ header {
 }
 
 .logo img {
-    height: 50px;
-}
-
-.logo svg {
-    width: 50px;
-    width: 45px;
+    height: 40px;
 }
 
 .tabs {

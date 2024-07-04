@@ -5,7 +5,7 @@
                 <p>Built by Traders for Traders.</p>
 
                 <div class="links">
-                    <a href="https://x.com/magentadex">Follow us on X</a>
+                    <a target="_blank" ref="https://x.com/magentadex">Follow us on X</a>
                 </div>
             </footer>
         </div>

@@ -55,6 +55,8 @@ const initClaimTokens = async () => {
         return;
     }
 
+    claiming.value = true;
+
     const txHash = await claimTokens();
 
     if (txHash) {
@@ -73,6 +75,8 @@ const initClaimTokens = async () => {
             category: 'error'
         });
     }
+
+    claiming.value = false;
 };
 
 const initialize = async () => {

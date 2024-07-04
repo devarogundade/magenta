@@ -2,7 +2,6 @@
 import ArrowRightIcon from '@/components/icons/ArrowRightIcon.vue';
 import InterChangeIcon from '@/components/icons/InterChangeIcon.vue';
 import LoadingBox from '../components/LoadingBox.vue';
-import SearchIcon from '../components/icons/SearchIcon.vue';
 import FailedfulIcon from '../components/icons/FailedfulIcon.vue';
 import SuccessfulIcon from '../components/icons/SuccessfulIcon.vue';
 import ArrowLeftIcon from '../components/icons/ArrowLeftIcon.vue';
@@ -27,7 +26,7 @@ import type { SwapOrderCreated } from "@/types";
 import { getSwapOrders } from "@/scripts/graph";
 import gsap from 'gsap';
 import { format } from 'timeago.js';
-import { zeroHash } from 'viem';
+import { fineHash, fineId } from '@/scripts/utils';
 
 createWeb3Modal({
   wagmiConfig: config,
@@ -42,12 +41,10 @@ const addressStore = useAddressStore();
 const timelyStore = useTimelyStore();
 const swapping = ref<boolean>(false);
 const approving = ref<boolean>(false);
+const swapAction = ref<boolean>(true);
 const swapOrders = ref<SwapOrderCreated[]>([]);
 const loading = ref<Boolean | undefined>(undefined);
 const total = ref<number>(0);
-const lastPage = ref<number>(0);
-const currentPage = ref<number>(1);
-import { fineHash, fineId } from '@/scripts/utils';
 
 const swap = ref({
   tokenIn: tokens[0].tokenId,
@@ -367,6 +364,16 @@ watch(
   }
 );
 
+watch(
+  swapAction,
+  () => {
+    updateSwapOrders();
+  },
+  {
+    deep: true
+  }
+);
+
 onMounted(() => {
   gsap.fromTo('#intro_anim',
     { y: 50, opacity: 0 },
@@ -388,8 +395,11 @@ onMounted(() => {
   <section>
     <div class="app_width">
       <div class="swap_container">
-        <div class="swap_wrapper">
+        <div class="swap_wrapper" v-if="swapAction">
           <div class="swap" id="intro_anim">
+            <div class="history" v-if="addressStore.address" @click="swapAction = false">
+              <button>History</button>
+            </div>
             <div class="amount">
               <p class="label">You're paying <span
                   @click="swap.amountIn = Number(Converter.toMoney(swap.balanceIn))">Bal: {{
@@ -482,13 +492,13 @@ onMounted(() => {
         </div>
       </div>
 
-      <LoadingBox v-show="loading" id="intro_anim" />
+      <LoadingBox v-show="loading && !swapAction" id="intro_anim" />
 
-      <div class="explore" v-show="!loading && swapOrders.length > 0">
+      <div class="explore" v-show="!loading && swapOrders.length > 0 && !swapAction">
         <div class="explore_stat">
           <div class="explore_stat_title">
             <p id="intro_anim">
-              Total swap orders: <span>{{ total.valueOf() }}</span>
+              <ArrowLeftIcon @click="swapAction = true" /> Total swap orders: <span>{{ total.valueOf() }}</span>
             </p>
           </div>
         </div>
@@ -575,25 +585,6 @@ onMounted(() => {
               </tbody>
             </div>
           </table>
-
-          <!-- <div class="transaction_navigation">
-            <div class="back" @click="back" :style="{ opacity: currentPage == 1 ? '0.3' : '1' }">
-              <ArrowLeftIcon />
-              <p>Back</p>
-            </div>
-
-            <div class="pages">
-              <div v-for="index in lastPage" @click="getPayloads(index)"
-                :class="currentPage == index ? 'page page_active' : 'page'" :key="index">
-                {{ index }}
-              </div>
-            </div>
-
-            <div class="next" @click="next" :style="{ opacity: currentPage == lastPage ? '0.3' : '1' }">
-              <p>Next</p>
-              <ArrowRightIcon />
-            </div>
-          </div> -->
         </div>
       </div>
     </div>
@@ -619,6 +610,23 @@ onMounted(() => {
   border: 1px solid var(--background-lighter);
   border-radius: 16px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.1) 0px 3px 6px;
+}
+
+.history {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.history button {
+  border: 1px solid var(--primary);
+  background: var(--background-lighter);
+  color: var(--tx-normal);
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 10px;
 }
 
 .amount .input {

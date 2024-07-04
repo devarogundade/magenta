@@ -45,7 +45,6 @@ input[type=number] {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 40px 0;
 }
 
 .explore_title {
@@ -70,7 +69,16 @@ input[type=number] {
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  margin-top: 60px;
+}
+
+.explore_stat_title p {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.explore_stat_title p svg {
+  cursor: pointer;
 }
 
 .explore_stat_title p:first-child {
