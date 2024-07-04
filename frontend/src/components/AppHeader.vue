@@ -4,11 +4,7 @@
             <header>
                 <RouterLink to="/">
                     <div class="logo">
-                        <TimelyIcon />
-                        <div class="logo_name">
-                            <h3>Magenta</h3>
-                            <span>DEx</span>
-                        </div>
+                        <img src="/images/logo.png" alt="logo">
                     </div>
                 </RouterLink>
 
@@ -49,7 +45,6 @@
 </template>
 
 <script setup lang="ts">
-import TimelyIcon from './icons/TimelyIcon.vue';
 import { config, chains } from '../scripts/config';
 import Converter from '@/scripts/converter';
 import { onMounted, ref } from 'vue';
@@ -112,28 +107,12 @@ header {
     user-select: none;
 }
 
-.logo_name {
-    margin-top: -6px;
-}
-
-.logo_name span {
-    margin-top: 2px;
-    font-size: 11px;
-    border: 1px solid magenta;
-    border-radius: 10px;
-    padding: 2px 6px;
-    background: rgba(255, 0, 255, 0.238);
-    color: var(--tx-normal);
-    font-weight: 300;
-}
-
-.logo h3 {
-    font-size: 20px;
-    color: var(--tx-normal);
-    font-weight: 500;
+.logo img {
+    height: 50px;
 }
 
 .logo svg {
+    width: 50px;
     width: 45px;
 }
 

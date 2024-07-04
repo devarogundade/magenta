@@ -4,13 +4,13 @@
       stroke-linecap="round" stroke-linejoin="round" />
     <path d="M12.4917 10.8417V5.00835V2.91669" stroke="#66676C" stroke-width="1.5" stroke-miterlimit="10"
       stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M12.4917 17.0834V14.1667" stroke="#0177FB" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-      stroke-linejoin="round" />
+    <path d="M12.4917 17.0834V14.1667" stroke="var(--primary)" stroke-width="1.5" stroke-miterlimit="10"
+      stroke-linecap="round" stroke-linejoin="round" />
     <path d="M7.50829 17.0833L3.32495 12.9083" stroke="#66676C" stroke-width="1.5" stroke-miterlimit="10"
       stroke-linecap="round" stroke-linejoin="round" />
     <path d="M7.5083 9.15833V14.9917V17.0833" stroke="#66676C" stroke-width="1.5" stroke-miterlimit="10"
       stroke-linecap="round" stroke-linejoin="round" />
-    <path d="M7.5083 2.91669V5.83335" stroke="#0177FB" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round"
-      stroke-linejoin="round" />
+    <path d="M7.5083 2.91669V5.83335" stroke="var(--primary)" stroke-width="1.5" stroke-miterlimit="10"
+      stroke-linecap="round" stroke-linejoin="round" />
   </svg>
 </template>

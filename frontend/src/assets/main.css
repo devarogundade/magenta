@@ -1,11 +1,11 @@
 @import './base.css';
 
 :root {
-  --background: #1A1B23;
-  --primary: #0177FB;
+  --background: #231a1a;
+  --primary: #fb2601;
   --tx-normal: #FFF;
-  --tx-dimmed: #8B8CA7;
-  --background-light: #23242F;
-  --background-lighter: #2C2D3A;
+  --tx-dimmed: #a78c8b;
+  --background-light: #2f2323;
+  --background-lighter: #3a2c2c;
   --red: #6c2b2b;
 }
