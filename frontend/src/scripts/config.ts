@@ -13,7 +13,7 @@ export const chains = [fraxtal];
 
 export const config = defaultWagmiConfig({
     // @ts-ignore
-    chains, projectId, metadata, connectors: [walletConnect({
+    chains, projectId: import.meta.env.VITE_PROJECT_ID, metadata, connectors: [walletConnect({
         projectId: import.meta.env.VITE_PROJECT_ID
     })]
 });
