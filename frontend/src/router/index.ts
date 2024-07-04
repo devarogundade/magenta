@@ -3,6 +3,7 @@ import SwapView from '../views/SwapView.vue';
 import LimitOrderView from '../views/LimitOrderView.vue';
 import DCAOrderView from '../views/DCAOrderView.vue';
 import TransferOrderView from '../views/TransferOrderView.vue';
+import AirdropView from '../views/AirdropView.vue';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -26,6 +27,11 @@ const router = createRouter({
       path: '/stream',
       name: 'stream',
       component: TransferOrderView
+    },
+    {
+      path: '/airdrop',
+      name: 'airdrop',
+      component: AirdropView
     }
   ]
 });

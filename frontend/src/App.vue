@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router';
 import AppHeader from '@/components/AppHeader.vue';
+import AppFooter from '@/components/AppFooter.vue';
 import SnackbarPop from '@/pops/SnackbarPop.vue';
 import { initializeApp } from "firebase/app";
 
@@ -21,7 +22,8 @@ initializeApp(firebaseConfig);
 <template>
   <main>
     <AppHeader />
-    <RouterView />
+    <RouterView style="padding-bottom: 50px;" />
     <SnackbarPop />
+    <AppFooter />
   </main>
 </template>

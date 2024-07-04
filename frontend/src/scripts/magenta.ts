@@ -1,5 +1,6 @@
 import { config } from './config';
 import { abi } from '../abis/magenta';
+import { abi as airdropAbi } from '../abis/airdrop';
 import { waitForTransactionReceipt, writeContract, readContract } from '@wagmi/core';
 import type { Hours, Minutes } from '@/types';
 import Converter from './converter';
@@ -8,9 +9,28 @@ export const DefaultDDL: number = 5 * 60;
 
 export const timelyTokenId: `0x${string}` = '0x1A7ACB0B1F382e6497DD010465CDa3E714d3709b';
 export const magentaId: `0x${string}` = '0x3199C8dAADac1285167066c2C917E9D8B11366bc';
+export const airdropId: `0x${string}` = '0xeE6e750baf6f35fF11735794A5b4cd24ff848A12';
 
 export const timelyFee: string = Converter.toWei('0.01');
-export const magentaFee: string = Converter.toWei('0.00003');
+export const magentaFee: string = Converter.toWei('0');
+
+export async function claimTokens(): Promise<`0x${string}` | null> {
+    try {
+        const result = await writeContract(config, {
+            abi: airdropAbi,
+            address: airdropId,
+            functionName: 'claimTokens',
+        });
+
+        const receipt = await waitForTransactionReceipt(config, { hash: result });
+
+        return receipt.transactionHash;
+    } catch (error) {
+        console.log(error);
+
+        return null;
+    }
+}
 
 export async function swapTokens(
     tokenIn: `0x${string}`,

@@ -21,6 +21,9 @@
                     <RouterLink to="/stream">
                         <button :class="$route.name == 'stream' ? 'tab active' : 'tab'">Stream</button>
                     </RouterLink>
+                    <RouterLink to="/airdrop">
+                        <button :class="$route.name == 'airdrop' ? 'tab active' : 'tab'">Early birds 🩸</button>
+                    </RouterLink>
                 </div>
 
                 <div class="action">
@@ -94,7 +97,7 @@ section {
 
 header {
     width: 100%;
-    height: 100px;
+    height: 80px;
     display: grid;
     grid-template-columns: 2fr 2fr 2fr;
     align-items: center;
@@ -120,12 +123,12 @@ header {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 16px;
 }
 
 .tab {
     text-wrap: nowrap;
-    padding: 0 20px;
+    padding: 0 10px;
     font-size: 16px;
     height: 24px;
     font-weight: 500;
