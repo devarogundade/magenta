@@ -11,7 +11,7 @@ import OutIcon from '@/components/icons/OutIcon.vue';
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
 
-import { config, projectId, chains } from '../scripts/config';
+import { config, chains } from '../scripts/config';
 import { onMounted, ref, watch } from 'vue';
 import { useAddressStore } from '@/stores/address';
 import { useTimelyStore } from '@/stores/timely';
@@ -31,7 +31,7 @@ import { zeroHash } from 'viem';
 
 createWeb3Modal({
   wagmiConfig: config,
-  projectId: projectId,
+  projectId: import.meta.env.VITE_PROJECT_ID,
   // @ts-ignore
   chains: chains,
   enableAnalytics: true

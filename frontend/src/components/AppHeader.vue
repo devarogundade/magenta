@@ -50,7 +50,7 @@
 
 <script setup lang="ts">
 import TimelyIcon from './icons/TimelyIcon.vue';
-import { config, projectId, chains } from '../scripts/config';
+import { config, chains } from '../scripts/config';
 import Converter from '@/scripts/converter';
 import { onMounted, ref } from 'vue';
 import { useAddressStore } from '@/stores/address';
@@ -62,7 +62,7 @@ import { watchAccount } from '@wagmi/core';
 
 createWeb3Modal({
     wagmiConfig: config,
-    projectId: projectId,
+    projectId: import.meta.env.VITE_PROJECT_ID,
     // @ts-ignore
     chains: chains,
     enableAnalytics: true
