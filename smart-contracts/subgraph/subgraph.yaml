@@ -1,0 +1,74 @@
+specVersion: 1.0.0
+indexerHints:
+  prune: auto
+schema:
+  file: ./schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Magenta
+    network: frax-mainnet
+    source:
+      address: "0x3199C8dAADac1285167066c2C917E9D8B11366bc"
+      abi: Magenta
+      startBlock: 6653873
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - DCAOrderCancelled
+        - DCAOrderCreated
+        - DCAOrderExecuted
+        - LimitOrdeCancelled
+        - LimitOrderCreated
+        - LimitOrderExecuted
+        - Paused
+        - RoleAdminChanged
+        - RoleGranted
+        - RoleRevoked
+        - SwapOrderCancelled
+        - SwapOrderCreated
+        - SwapOrderExecuted
+        - TransferOrderCancelled
+        - TransferOrderCreated
+        - TransferOrderExecuted
+        - Unpaused
+      abis:
+        - name: Magenta
+          file: ./abis/Magenta.json
+      eventHandlers:
+        - event: DCAOrderCancelled(indexed bytes32)
+          handler: handleDCAOrderCancelled
+        - event: DCAOrderCreated(indexed address,indexed bytes32,address,address,uint256,uint64,uint256,uint8,uint8)
+          handler: handleDCAOrderCreated
+        - event: DCAOrderExecuted(indexed bytes32,uint256)
+          handler: handleDCAOrderExecuted
+        - event: LimitOrdeCancelled(indexed bytes32)
+          handler: handleLimitOrdeCancelled
+        - event: LimitOrderCreated(indexed address,indexed bytes32,address,address,uint256,uint256,uint64,uint256)
+          handler: handleLimitOrderCreated
+        - event: LimitOrderExecuted(indexed bytes32)
+          handler: handleLimitOrderExecuted
+        - event: Paused(address)
+          handler: handlePaused
+        - event: RoleAdminChanged(indexed bytes32,indexed bytes32,indexed bytes32)
+          handler: handleRoleAdminChanged
+        - event: RoleGranted(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleGranted
+        - event: RoleRevoked(indexed bytes32,indexed address,indexed address)
+          handler: handleRoleRevoked
+        - event: SwapOrderCancelled(indexed bytes32)
+          handler: handleSwapOrderCancelled
+        - event: SwapOrderCreated(indexed address,indexed bytes32,address,address,uint256,uint256,uint64,uint256)
+          handler: handleSwapOrderCreated
+        - event: SwapOrderExecuted(indexed bytes32)
+          handler: handleSwapOrderExecuted
+        - event: TransferOrderCancelled(indexed bytes32)
+          handler: handleTransferOrderCancelled
+        - event: TransferOrderCreated(indexed address,indexed bytes32,address,address,uint256,uint64,uint256,uint8,uint8)
+          handler: handleTransferOrderCreated
+        - event: TransferOrderExecuted(indexed bytes32,uint256)
+          handler: handleTransferOrderExecuted
+        - event: Unpaused(address)
+          handler: handleUnpaused
+      file: ./src/magenta.ts

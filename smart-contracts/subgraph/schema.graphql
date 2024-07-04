@@ -1,0 +1,116 @@
+type DCAOrderCreated @entity(immutable: false) {
+  id: Bytes!
+  actor: Bytes! # address
+  identifier: Bytes! # bytes32
+  tokenIn: Bytes! # address
+  tokenOut: Bytes! # address
+  amountIn: BigInt! # uint256
+  startDelay: BigInt! # uint64
+  numOfOrders: BigInt! # uint256
+  iMinutes: Int! # uint8
+  iHours: Int! # uint8
+  executed: Boolean!
+  amountInBalance: BigInt!
+  cancelled: Boolean!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type LimitOrderCreated @entity(immutable: false) {
+  id: Bytes!
+  actor: Bytes! # address
+  identifier: Bytes! # bytes32
+  tokenIn: Bytes! # address
+  tokenOut: Bytes! # address
+  amountIn: BigInt! # uint256
+  amountOutMin: BigInt! # uint256
+  startDelay: BigInt! # uint64
+  deadline: BigInt! # uint256
+  executed: Boolean!
+  cancelled: Boolean!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Paused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleAdminChanged @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  previousAdminRole: Bytes! # bytes32
+  newAdminRole: Bytes! # bytes32
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleGranted @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type RoleRevoked @entity(immutable: true) {
+  id: Bytes!
+  role: Bytes! # bytes32
+  account: Bytes! # address
+  sender: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SwapOrderCreated @entity(immutable: false) {
+  id: Bytes!
+  actor: Bytes! # address
+  identifier: Bytes! # bytes32
+  tokenIn: Bytes! # address
+  tokenOut: Bytes! # address
+  amountIn: BigInt! # uint256
+  amountOutMin: BigInt! # uint256
+  startDelay: BigInt! # uint64
+  deadline: BigInt! # uint256
+  executed: Boolean!
+  cancelled: Boolean!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type TransferOrderCreated @entity(immutable: false) {
+  id: Bytes!
+  actor: Bytes! # address
+  identifier: Bytes! # bytes32
+  receiver: Bytes! # address
+  tokenIn: Bytes! # address
+  amountIn: BigInt! # uint256
+  startDelay: BigInt! # uint64
+  numOfOrders: BigInt! # uint256
+  iMinutes: Int! # uint8
+  iHours: Int! # uint8
+  executed: Boolean!
+  cancelled: Boolean!
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type Unpaused @entity(immutable: true) {
+  id: Bytes!
+  account: Bytes! # address
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
