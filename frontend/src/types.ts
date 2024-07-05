@@ -55,6 +55,7 @@ export type TransferOrderCreated = {
     id: `0x${string}`;
     actor: `0x${string}`;
     identifier: `0x${string}`;
+    receiver: `0x${string}`;
     tokenIn: `0x${string}`;
     amountIn: string;
     numOfOrders: number;

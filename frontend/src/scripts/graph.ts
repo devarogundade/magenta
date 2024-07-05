@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { DCAOrderCreated, LimitOrderCreated, SwapOrderCreated } from "@/types";
+import type { DCAOrderCreated, LimitOrderCreated, SwapOrderCreated, TransferOrderCreated } from "@/types";
 
 const Endpoint: string = 'https://api.goldsky.com/api/public/project_cly656z1bbfza0114c0f02goy/subgraphs/magenta/2.0/gn';
 
@@ -101,7 +101,7 @@ export async function getDCAOrders(address: `0x${string}`, first = 15): Promise<
     }
 }
 
-export async function getTransferOrders(address: `0x${string}`, first = 15): Promise<DCAOrderCreated[]> {
+export async function getTransferOrders(address: `0x${string}`, first = 15): Promise<TransferOrderCreated[]> {
     try {
         const response = await axios.post(Endpoint, {
             query: `
@@ -110,6 +110,7 @@ export async function getTransferOrders(address: `0x${string}`, first = 15): Pro
                     id
                     actor
                     identifier
+                    receiver
                     tokenIn
                     amountIn
                     numOfOrders
@@ -126,7 +127,7 @@ export async function getTransferOrders(address: `0x${string}`, first = 15): Pro
             `
         });
 
-        return response.data.data.transferOrderCreateds as DCAOrderCreated[];
+        return response.data.data.transferOrderCreateds as TransferOrderCreated[];
     } catch (error) {
         console.log(error);
         return [];

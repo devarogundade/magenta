@@ -243,6 +243,16 @@ thead td {
   font-size: 14px;
 }
 
+table .images {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+table .images img:nth-child(2) {
+  margin-left: -4px;
+}
+
 .payload_hash {
   justify-content: flex-end;
 }

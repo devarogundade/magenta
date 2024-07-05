@@ -532,7 +532,7 @@ onMounted(() => {
                   <tr>
                     <td>Identifier</td>
                     <td>Status</td>
-                    <td>Swap pair</td>
+                    <td>Token </td>
                     <td>Timestamp</td>
                     <td>Hash</td>
                   </tr>
@@ -571,11 +571,13 @@ onMounted(() => {
                         <a>
                           <div class="stack">
                             <div class="images">
-                              <img :src="getToken(order.tokenIn)?.image" alt="">
+                              <p><img :src="getToken(order.tokenIn)?.image" alt=""> sent to {{ fineHash(order.receiver)
+                                }}
+                              </p>
                             </div>
                             <p>{{ Converter.toMoney(Converter.fromWei(order.amountIn)) }} {{
                               getToken(order.tokenIn)?.symbol
-                            }} Over {{ order.numOfOrders }} Orders</p>
+                              }} Over {{ order.numOfOrders }} Orders</p>
                           </div>
                         </a>
                       </div>
