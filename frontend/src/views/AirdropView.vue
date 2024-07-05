@@ -102,7 +102,7 @@ onMounted(() => {
                 <a href="https://timelyblock.xyz" target="_blank" rel="noopener noreferrer">
                     <div class="airdrop">
                         <img src="/images/airdrop.png" alt="">
-                        <p>Claim free $TML tokens sponsored Timely.</p>
+                        <p>Claim free $TML tokens sponsored by Timely.</p>
                     </div>
                 </a>
 
