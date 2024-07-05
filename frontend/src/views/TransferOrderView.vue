@@ -400,7 +400,8 @@ onMounted(() => {
 
                   <div class="dropdown_tokens" v-if="transferOrder.openFrom">
                     <div class="token" v-for="token, index in getTokensExcept(transferOrder.tokenIn)"
-                      @click="transferOrder.tokenIn = token.tokenId" :key="index">
+                      @click="transferOrder.tokenIn = token.tokenId; transferOrder.openFrom = !transferOrder.openFrom"
+                      :key="index">
                       <div class="token_info">
                         <img :src="token.image" alt="">
                         <p>{{ token.symbol }}</p>
@@ -587,7 +588,7 @@ onMounted(() => {
                             </div>
                             <p>{{ Converter.toMoney(Converter.fromWei(order.amountIn)) }} {{
                               getToken(order.tokenIn)?.symbol
-                              }} Over {{ order.numOfOrders }} Orders</p>
+                            }} Over {{ order.numOfOrders }} Orders</p>
                           </div>
                         </a>
                       </div>

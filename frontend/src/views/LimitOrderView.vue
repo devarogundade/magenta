@@ -437,7 +437,8 @@ onMounted(() => {
 
                   <div class="dropdown_tokens" v-if="limitOrder.openFrom">
                     <div class="token" v-for="token, index in getTokensExcept(limitOrder.tokenIn)"
-                      @click="limitOrder.tokenIn = token.tokenId" :key="index">
+                      @click="limitOrder.tokenIn = token.tokenId; limitOrder.openFrom = !limitOrder.openFrom"
+                      :key="index">
                       <div class="token_info">
                         <img :src="token.image" alt="">
                         <p>{{ token.symbol }}</p>
@@ -472,7 +473,7 @@ onMounted(() => {
 
                   <div class="dropdown_tokens" v-if="limitOrder.openTo">
                     <div class="token" v-for="token, index in getTokensExcept(limitOrder.tokenOut)" :key="index"
-                      @click="limitOrder.tokenOut = token.tokenId">
+                      @click="limitOrder.tokenOut = token.tokenId; limitOrder.openTo = !limitOrder.openTo">
                       <div class="token_info">
                         <img :src="token.image" alt="">
                         <p>{{ token.symbol }}</p>

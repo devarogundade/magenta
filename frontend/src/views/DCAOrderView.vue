@@ -428,7 +428,7 @@ onMounted(() => {
 
                   <div class="dropdown_tokens" v-if="dcaOrder.openFrom">
                     <div class="token" v-for="token, index in getTokensExcept(dcaOrder.tokenIn)"
-                      @click="dcaOrder.tokenIn = token.tokenId" :key="index">
+                      @click="dcaOrder.tokenIn = token.tokenId; dcaOrder.openFrom = !dcaOrder.openFrom" :key="index">
                       <div class="token_info">
                         <img :src="token.image" alt="">
                         <p>{{ token.symbol }}</p>
@@ -464,7 +464,7 @@ onMounted(() => {
 
                   <div class="dropdown_tokens" v-if="dcaOrder.openTo">
                     <div class="token" v-for="token, index in getTokensExcept(dcaOrder.tokenOut)" :key="index"
-                      @click="dcaOrder.tokenOut = token.tokenId">
+                      @click="dcaOrder.tokenOut = token.tokenId; dcaOrder.openTo = !dcaOrder.openTo">
                       <div class="token_info">
                         <img :src="token.image" alt="">
                         <p>{{ token.symbol }}</p>
@@ -643,7 +643,7 @@ onMounted(() => {
                           </div>
                           <p>{{ Converter.toMoney(Converter.fromWei(order.amountIn)) }} {{
                             getToken(order.tokenIn)?.symbol
-                            }} to {{
+                          }} to {{
                               getToken(order.tokenOut)?.symbol
                             }}</p>
                         </div>

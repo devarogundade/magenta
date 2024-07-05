@@ -427,7 +427,7 @@ onMounted(() => {
 
                   <div class="dropdown_tokens" v-if="swap.openFrom">
                     <div class="token" v-for="token, index in getTokensExcept(swap.tokenIn)"
-                      @click="swap.tokenIn = token.tokenId" :key="index">
+                      @click="swap.tokenIn = token.tokenId; swap.openFrom = !swap.openFrom" :key="index">
                       <div class="token_info">
                         <img :src="token.image" alt="">
                         <p>{{ token.symbol }}</p>
@@ -462,7 +462,7 @@ onMounted(() => {
 
                   <div class="dropdown_tokens" v-if="swap.openTo">
                     <div class="token" v-for="token, index in getTokensExcept(swap.tokenOut)" :key="index"
-                      @click="swap.tokenOut = token.tokenId">
+                      @click="swap.tokenOut = token.tokenId; swap.openTo = !swap.openTo">
                       <div class="token_info">
                         <img :src="token.image" alt="">
                         <p>{{ token.symbol }}</p>
