@@ -52,7 +52,7 @@ const transferOrder = ref({
   amountIn: undefined as number | undefined,
   approveIn: 0,
   numOfOrders: 2,
-  iMinutes: Minutes.TWO_MINUTES,
+  iMinutes: Minutes.ONE_MINUTES,
   iHours: Hours.INGORE,
   balanceIn: undefined as number | undefined,
   startDate: new Date() as Date | null,
