@@ -449,7 +449,7 @@ onMounted(() => {
             </div>
 
             <div class="amount">
-              <p class="label">You'll receive <span>Bal: {{ Converter.toMoney(swap.balanceOut) }}</span></p>
+              <p class="label">You'll receive (min.) <span>Bal: {{ Converter.toMoney(swap.balanceOut) }}</span></p>
               <div class="input">
                 <div class="tokens">
                   <div class="token" @click="swap.openTo = !swap.openTo">
