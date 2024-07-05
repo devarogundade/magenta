@@ -159,6 +159,16 @@ const initTransferOrder = async () => {
     return;
   };
 
+  if (transferOrder.value.amountIn > (transferOrder.value.balanceIn || 0)) {
+    notify.push({
+      title: 'Insufficient funds',
+      description: 'Please carefully enter your actual balance.',
+      category: 'error'
+    });
+    return;
+  };
+
+
   if (swapping.value) {
     notify.push({
       title: 'Please wait',

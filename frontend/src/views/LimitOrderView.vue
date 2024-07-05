@@ -155,6 +155,15 @@ const initLimitOrder = async () => {
     return;
   }
 
+  if (limitOrder.value.amountIn > (limitOrder.value.balanceIn || 0)) {
+    notify.push({
+      title: 'Insufficient funds',
+      description: 'Please carefully enter your actual balance.',
+      category: 'error'
+    });
+    return;
+  };
+
   if (swapping.value) {
     notify.push({
       title: 'Please wait',
@@ -574,7 +583,7 @@ onMounted(() => {
                           </div>
                           <p>{{ Converter.toMoney(Converter.fromWei(order.amountIn)) }} {{
                             getToken(order.tokenIn)?.symbol
-                            }} to {{
+                          }} to {{
                               getToken(order.tokenOut)?.symbol
                             }}</p>
                         </div>
