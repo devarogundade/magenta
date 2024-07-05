@@ -106,7 +106,7 @@ export async function getTransferOrders(address: `0x${string}`, first = 15): Pro
         const response = await axios.post(Endpoint, {
             query: `
             {
-                dcaorderCreateds(where: {actor: "${address}"}, orderBy: blockTimestamp, orderDirection: desc, first: ${first}) {
+                transferOrderCreateds(where: {actor: "${address}"}, orderBy: blockTimestamp, orderDirection: desc, first: ${first}) {
                     id
                     actor
                     identifier
@@ -126,7 +126,7 @@ export async function getTransferOrders(address: `0x${string}`, first = 15): Pro
             `
         });
 
-        return response.data.data.dcaorderCreateds as DCAOrderCreated[];
+        return response.data.data.transferOrderCreateds as DCAOrderCreated[];
     } catch (error) {
         console.log(error);
         return [];

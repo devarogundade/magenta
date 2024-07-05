@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import ArrowRightIcon from '@/components/icons/ArrowRightIcon.vue';
-import InterChangeIcon from '@/components/icons/InterChangeIcon.vue';
+import LoadingBox from '../components/LoadingBox.vue';
+import FailedfulIcon from '../components/icons/FailedfulIcon.vue';
+import SuccessfulIcon from '../components/icons/SuccessfulIcon.vue';
+import ArrowLeftIcon from '../components/icons/ArrowLeftIcon.vue';
+import OutIcon from '@/components/icons/OutIcon.vue';
 
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css';
@@ -18,6 +22,11 @@ import { createWeb3Modal } from '@web3modal/wagmi/vue';
 import { useWeb3Modal } from '@web3modal/wagmi/vue';
 import { watchAccount } from '@wagmi/core';
 import { Minutes, Hours } from '@/types';
+import type { TransferOrderCreated } from "@/types";
+import { getTransferOrders } from "@/scripts/graph";
+import gsap from 'gsap';
+import { format } from 'timeago.js';
+import { fineHash, fineId } from '@/scripts/utils';
 
 createWeb3Modal({
   wagmiConfig: config,
@@ -32,6 +41,10 @@ const addressStore = useAddressStore();
 const timelyStore = useTimelyStore();
 const swapping = ref<boolean>(false);
 const approving = ref<boolean>(false);
+const swapAction = ref<boolean>(true);
+const transferOrders = ref<TransferOrderCreated[]>([]);
+const loading = ref<Boolean | undefined>(undefined);
+const total = ref<number>(0);
 
 const transferOrder = ref({
   tokenIn: tokens[0].tokenId,
@@ -96,7 +109,10 @@ const initTransferCancel = async (identifier: `0x${string}`) => {
       linkTitle: 'View Trx',
       linkUrl: `https://fraxscan.com/tx/${txHash}`
     });
+
     updateBalances();
+
+    setTimeout(() => { updateTransferOrders(); }, 3000);
   } else {
     notify.push({
       title: 'Transaction failed',
@@ -215,6 +231,8 @@ const initTransferOrder = async () => {
     transferOrder.value.receiver = undefined;
 
     updateBalances();
+
+    setTimeout(() => { updateTransferOrders(); }, 3000);
   } else {
     notify.push({
       title: 'Transaction failed',
@@ -273,6 +291,8 @@ const initApprove = async () => {
     });
 
     updateApprovals();
+
+    initTransferOrder();
   } else {
     notify.push({
       title: 'Transaction failed',
@@ -284,9 +304,28 @@ const initApprove = async () => {
   approving.value = false;
 };
 
+const updateTransferOrders = async () => {
+  if (addressStore.address) {
+    loading.value = true;
+
+    const data = await getTransferOrders(addressStore.address);
+    transferOrders.value = data;
+    total.value = data.length;
+
+    loading.value = false;
+
+    gsap.fromTo('#table_anim',
+      { scale: .95, opacity: 0 },
+      { scale: 1, opacity: 1, duration: .4, ease: 'sine.inOut', delay: 0.2 }
+    );
+  }
+};
+
 const initialize = async () => {
   updateBalances();
+  updateTransferOrders();
 };
+
 
 watch(
   transferOrder,
@@ -299,7 +338,22 @@ watch(
   }
 );
 
+watch(
+  swapAction,
+  () => {
+    updateTransferOrders();
+  },
+  {
+    deep: true
+  }
+);
+
 onMounted(() => {
+  gsap.fromTo('#intro_anim',
+    { y: 50, opacity: 0 },
+    { y: 0, opacity: 1, duration: .4, stagger: 0.1, ease: 'sine.inOut' }
+  );
+
   watchAccount(config, {
     onChange(account: any) {
       addressStore.setAddress(account.address);
@@ -315,8 +369,11 @@ onMounted(() => {
   <section>
     <div class="app_width">
       <div class="swap_container">
-        <div class="swap_wrapper">
-          <div class="swap">
+        <div class="swap_wrapper" v-if="swapAction">
+          <div class="swap" id="intro_anim">
+            <div class="history" v-if="addressStore.address" @click="swapAction = false">
+              <button>History</button>
+            </div>
             <div class="amount">
               <p class="label">I want to send <span
                   @click="transferOrder.amountIn = Number(Converter.toMoney(transferOrder.balanceIn))">Bal: {{
@@ -457,6 +514,93 @@ onMounted(() => {
             </div>
           </div>
         </div>
+        <LoadingBox v-show="loading && !swapAction" id="intro_anim" />
+
+        <div class="explore" v-show="!loading && !swapAction">
+          <div class="explore_stat">
+            <div class="explore_stat_title">
+              <p id="intro_anim">
+                <ArrowLeftIcon @click="swapAction = true" />Stream orders: <span>{{ total.valueOf() }}</span>
+              </p>
+            </div>
+          </div>
+
+          <div class="explore_table" id="table_anim">
+            <table>
+              <div class="thead">
+                <thead>
+                  <tr>
+                    <td>Identifier</td>
+                    <td>Status</td>
+                    <td>Swap pair</td>
+                    <td>Timestamp</td>
+                    <td>Hash</td>
+                  </tr>
+                </thead>
+              </div>
+              <div class="tbody" v-for="order, index in transferOrders" :key="index">
+                <tbody>
+                  <tr>
+                    <td>
+                      <div class="payload_id">
+                        <a target="_blank" :href="`https://timelyblock.xyz/explorer/${order.identifier}`">
+                          <p>{{ fineId(order.id) }}</p>
+                          <OutIcon />
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="payload_status" v-if="order.executed">
+                        <SuccessfulIcon />
+                        <p>Executed</p>
+                      </div>
+                      <div class="payload_status" v-else-if="order.cancelled">
+                        <FailedfulIcon />
+                        <p>Cancelled</p>
+                      </div>
+                      <div class="payload_status" v-else>
+                        <SuccessfulIcon />
+                        <a>
+                          <p>Placed</p>
+                          <button @click="initTransferCancel(order.identifier)">Cancel</button>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="payload_hash">
+                        <a>
+                          <div class="stack">
+                            <div class="images">
+                              <img :src="getToken(order.tokenIn)?.image" alt="">
+                            </div>
+                            <p>{{ Converter.toMoney(Converter.fromWei(order.amountIn)) }} {{
+                              getToken(order.tokenIn)?.symbol
+                            }} Over {{ order.numOfOrders }} Orders</p>
+                          </div>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="payload_hash">
+                        <a>
+                          <p>{{ format(order.blockTimestamp * 1000) }}</p>
+                        </a>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="payload_hash">
+                        <a target="_blank" :href="`https://fraxscan.com/tx/${order.transactionHash}`">
+                          <p>{{ fineHash(order.transactionHash) }}</p>
+                          <OutIcon />
+                        </a>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </div>
+            </table>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -492,6 +636,25 @@ onMounted(() => {
   align-items: center;
   justify-content: space-between;
 }
+
+
+.history {
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.history button {
+  border: 1px solid var(--primary);
+  background: var(--background-lighter);
+  color: var(--tx-normal);
+  font-size: 14px;
+  cursor: pointer;
+  font-weight: 500;
+  padding: 4px 10px;
+  border-radius: 10px;
+}
+
 
 .amount .label {
   color: var(--tx-dimmed);

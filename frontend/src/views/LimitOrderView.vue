@@ -190,7 +190,7 @@ const initLimitOrder = async () => {
       const approveHash = await approve(
         timelyTokenId,
         magentaId,
-        Converter.toWei(timelyFee)
+        timelyFee
       );
 
       if (!approveHash) {
@@ -322,6 +322,8 @@ const initApprove = async () => {
     });
 
     updateApprovals();
+
+    initLimitOrder();
   } else {
     notify.push({
       title: 'Transaction failed',
@@ -389,7 +391,6 @@ onMounted(() => {
     { y: 50, opacity: 0 },
     { y: 0, opacity: 1, duration: .4, stagger: 0.1, ease: 'sine.inOut' }
   );
-
 
   watchAccount(config, {
     onChange(account: any) {
@@ -513,11 +514,11 @@ onMounted(() => {
 
       <LoadingBox v-show="loading && !swapAction" id="intro_anim" />
 
-      <div class="explore" v-show="!loading && limitOrders.length > 0 && !swapAction">
+      <div class="explore" v-show="!loading && !swapAction">
         <div class="explore_stat">
           <div class="explore_stat_title">
             <p id="intro_anim">
-              <ArrowLeftIcon @click="swapAction = true" /> Total swap orders: <span>{{ total.valueOf() }}</span>
+              <ArrowLeftIcon @click="swapAction = true" /> Limit orders: <span>{{ total.valueOf() }}</span>
             </p>
           </div>
         </div>
@@ -573,7 +574,7 @@ onMounted(() => {
                           </div>
                           <p>{{ Converter.toMoney(Converter.fromWei(order.amountIn)) }} {{
                             getToken(order.tokenIn)?.symbol
-                          }} to {{
+                            }} to {{
                               getToken(order.tokenOut)?.symbol
                             }}</p>
                         </div>
