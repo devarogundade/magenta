@@ -1,7 +1,7 @@
 import axios from "axios";
 import type { DCAOrderCreated, LimitOrderCreated, SwapOrderCreated } from "@/types";
 
-const Endpoint: string = 'https://api.goldsky.com/api/public/project_cly656z1bbfza0114c0f02goy/subgraphs/magenta/1.0/gn';
+const Endpoint: string = 'https://api.goldsky.com/api/public/project_cly656z1bbfza0114c0f02goy/subgraphs/magenta/2.0/g';
 
 export async function getSwapOrders(address: `0x${string}`, first = 15): Promise<SwapOrderCreated[]> {
     try {

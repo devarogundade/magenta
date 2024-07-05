@@ -255,6 +255,8 @@ export function handleTransferOrderCreated(
   entity.tokenIn = event.params.tokenIn;
   entity.amountIn = event.params.amountIn;
   entity.startDelay = event.params.startDelay;
+  entity.cancelled = false;
+  entity.executed = false;
   entity.numOfOrders = event.params.numOfOrders;
   entity.iMinutes = event.params.iMinutes;
   entity.iHours = event.params.iHours;
