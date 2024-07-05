@@ -108,7 +108,7 @@ onMounted(() => {
 
                 <div class="follow">
                     <input type="checkbox" name="" id="" v-model="hasTwitterFollow">
-                    <p>Follow them <a target="_blank" href="https://x.com/timelyblock">X (formerly Twitter)</a></p>
+                    <p>Follow them on <a target="_blank" href="https://x.com/timelyblock">X (formerly Twitter)</a></p>
                 </div>
 
                 <div class="claim">
